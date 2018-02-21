@@ -315,7 +315,7 @@ debug_link()
 get_debugfn()
 {
   dn=$(dirname "${1#$RPM_BUILD_ROOT}")
-  bn=$(basename "$1" .debug)${unique_debug_suffix}.debug
+  bn=$(basename "$1")${unique_debug_suffix}.debug
   debugdn=${debugdir}${dn}
   debugfn=${debugdn}/${bn}
 }
