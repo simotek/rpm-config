@@ -62,6 +62,7 @@ ALL_NAME=#
 NO_ALL_NAME=
 ONLY_C=#
 NO_C=#
+METAINFO=#
 while test $# -gt 0 ; do
     case "${1}" in
 	--with-gnome )
@@ -112,6 +113,11 @@ while test $# -gt 0 ; do
 	--without-C )
 		NO_C=
 		shift
+		;;
+	--metainfo )
+		METAINFO=
+		METADESKID=${2}
+		shift 2
 		;;
 	* )
 		if [ $MO_NAME != ${NAMES[$#]}.lang ]; then
@@ -324,6 +330,24 @@ if ! grep -q / $MO_NAME_NEW; then
 	echo "No translations found for ${NAMES[*]} in ${TOP_DIR}"
 	rm -f $MO_NAME_NEW
 	exit 1
+fi
+
+if [ -z "${METAINFO}" ] ; then
+    # create a metainfo.xml file for METADESKID
+    mkdir -p ${TOP_DIR}/usr/share/appdata
+    cat > ${TOP_DIR}/usr/share/appdata/${METADESKID}-lang.metainfo.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 openSUSE - file is auto-generated -->
+<component type="addon">
+  <id>${METADESKID}-lang</id>
+  <extends>${METADESKID}.desktop</extends>
+  <name>Translations</name>
+  <summary>Translate the user interface</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <updatecontact>https://bugzilla.opensuse.org</updatecontact>
+</component>
+EOF
+  echo /usr/share/appdata/${METADESKID}-lang.metainfo.xml >> $MO_NAME_NEW
 fi
 
 if ! grep -q / $MO_NAME_NEW; then
