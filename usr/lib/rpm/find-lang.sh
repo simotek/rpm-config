@@ -292,7 +292,9 @@ s:%lang(C) ::
 
 find "$TOP_DIR" -type f -o -type l|sed '
 s:'"$TOP_DIR"'::
-'"$NO_ALL_NAME$QT"'s:\(.*/'"$NAME"'_\([a-zA-Z]\{2\}\([_@].*\)\?\)\.qm$\):%lang(\2) \1:
+'"$ALL_NAME$QT"'s:\(.*/locale/\)\([^/]\+\)\(/.\+/\)\([^/]\+_qt\.qm$\):%lang(\2) \1\2\3\4:
+'"$NO_ALL_NAME$QT"'s:\(.*/locale/\)\([^/]\+\)\(/.\+/\)\('"$NAME"'_qt\.qm$\):%lang(\2) \1\2\3\4:
+'"$NO_ALL_NAME$QT"'s:^\([^%].*/'"$NAME"'_\([a-zA-Z]\{2\}\([_@].*\)\?\)\.qm$\):%lang(\2) \1:
 '"$ALL_NAME$QT"'s:^\([^%].*/\([a-zA-Z]\{2\}[_@].*\)\.qm$\):%lang(\2) \1:
 '"$ALL_NAME$QT"'s:^\([^%].*/\([a-zA-Z]\{2\}\)\.qm$\):%lang(\2) \1:
 '"$ALL_NAME$QT"'s:^\([^%].*/[^/_]\+_\([a-zA-Z]\{2\}[_@].*\)\.qm$\):%lang(\2) \1:
