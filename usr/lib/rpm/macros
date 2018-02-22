@@ -1468,6 +1468,11 @@ end}
 %{expand:%__scm_setup_%{__scm} %{!-v:-q}}\
 %{!-N:%autopatch %{-v} %{-p:-p%{-p*}}}
 
+# Should errors in %post scriptlet be propagated as errors? 
+#
+# Note: set to 1 for legacy compatibility.
+%_fail_on_postinstall_errors  0
+
 # \endverbatim
 #*/
 
