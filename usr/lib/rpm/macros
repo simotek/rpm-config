@@ -280,7 +280,7 @@ package or when debugging this package.\
 
 #	Path to top of build area.
 %_topdir		%{expand:%%global _topdir %{lua:if posix.access(rpm.expand("%{_usrsrc}/packages"), "w") then print "%{_usrsrc}/packages" else print "%{getenv:HOME}/rpmbuild" end} \
-+}%_topdir
+}%_topdir
 
 #	The path to the unzip executable (legacy, use %{__unzip} instead).
 %_unzipbin		%{__unzip}
@@ -1040,7 +1040,7 @@ package or when debugging this package.\
 	--sharedstatedir=%{_sharedstatedir} \\\
 	--mandir=%{_mandir} \\\
 	--infodir=%{_infodir} \\\
-    --disable-dependency-tracking
+	--disable-dependency-tracking
 
 #------------------------------------------------------------------------------
 # Tested features of make
@@ -1203,7 +1203,7 @@ PreReq: python >= %minver, python < %maxver
 #
 # JPackage Project  <http://www.jpackage.org/>
 #   David Walluck   <david@anti-microsoft.org>
-#   Ville Skytt�    <ville.skytta@iki.fi>
+#   Ville Skytt\E4    <ville.skytta@iki.fi>
 #   Nicolas Mailhot <Nicolas.Mailhot@laPoste.net>
 #
 # $Id: macros.jpackage,v 1.1.2.5 2003/08/30 13:24:58 scop Exp $
@@ -1476,6 +1476,7 @@ end}
 # \endverbatim
 #*/
 
+
 #------------------------------------------------------------------------
 # standard build service macros
 #
@@ -1494,3 +1495,4 @@ end}
 /usr/sbin/groupadd -r %{1} 2>/dev/null || :\
 /usr/sbin/useradd -r -g %{1} -d %{2} -s %{3} -c %{4} %{1} 2>/dev/null || :\
 %{nil}
+

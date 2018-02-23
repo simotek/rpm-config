@@ -42,7 +42,6 @@ REQUIRES=$(
 			(START==1) && /^\tName=/ {
 				sub(/Name=/, "", $1);
 				LIBNAME=$1
-	
 				# Allow rpm deps to be resolved for 1.0 profile version
 				if (VERSION=="1.0.3300.0")
 					OP=">="

@@ -127,7 +127,7 @@ while test $# -gt 0 ; do
 		shift
 		;;
     esac
-done    
+done
 
 if ! test -s $MO_NAME ; then
 	echo "%defattr (644, root, root, 755)" > $MO_NAME
@@ -148,8 +148,8 @@ done
 test -d "$TOP_DIR/usr/share/help/" && find $TOP_DIR/usr/share/help/ -maxdepth 1 -type d | sed 's:'"$TOP_DIR"/usr/share/help/'::; /^$/d' | while read dir; do
   if ! rpm -ql filesystem | egrep -q "/usr/share/help/$dir"$; then
     echo "removing help translation /usr/share/help/$dir"
-     rm -rf $TOP_DIR/usr/share/help/$dir
-   fi
+    rm -rf $TOP_DIR/usr/share/help/$dir
+  fi
 done
 
 for NAME in ${NAMES[@]}; do
