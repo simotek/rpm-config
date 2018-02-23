@@ -9,7 +9,7 @@
 %_os			linux
 %_gnu			-gnu
 %_target_platform	%{_target_cpu}-%{_vendor}-%{_target_os}
-%optflags		-O3 -mtune=power7 -mcpu=power7 -g
+%optflags		-O3 -mtune=power7 -mcpu=power7 -g -fmessage-length=0 -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables
 
 %__isa_name		ppc
 %__isa_bits		64
@@ -29,7 +29,7 @@
 %_exec_prefix		%{_prefix}
 %_bindir		%{_exec_prefix}/bin
 %_sbindir		%{_exec_prefix}/sbin
-%_libexecdir		%{_exec_prefix}/libexec
+%_libexecdir		%{_exec_prefix}/lib
 %_datarootdir		%{_prefix}/share
 %_datadir		%{_datarootdir}
 %_sysconfdir		/etc
@@ -41,7 +41,7 @@
 %_oldincludedir		/usr/include
 %_infodir		/usr/share/info
 %_mandir		/usr/share/man
-%_initddir		%{_sysconfdir}/rc.d/init.d
+%_initddir		%{_sysconfdir}/init.d
 # Deprecated misspelling, present for backwards compatibility.
 %_initrddir		%{_initddir}
 %_rundir		/run
@@ -68,8 +68,6 @@
 %__os_install_post    \
     %{_rpmconfigdir}/brp-compress \
     %{_rpmconfigdir}/brp-strip %{__strip} \
-    %{_rpmconfigdir}/brp-strip-static-archive %{__strip} \
-    %{_rpmconfigdir}/brp-strip-comment-note %{__strip} %{__objdump} \
 %{nil}
 
 %__spec_install_post\
@@ -78,3 +76,21 @@
     %{__os_install_post}\
 %{nil}
 
+#---------------------------------------------------------------------
+#        Expanded at end of %prep
+#
+%__id_u          %{__id} -u
+%__chown_Rhf     %{__chown} -Rhf
+%__chgrp_Rhf     %{__chgrp} -Rhf
+%_fixowner       [ `%{__id_u}` = '0' ] && %{__chown_Rhf} root
+%_fixgroup       [ `%{__id_u}` = '0' ] && %{__chgrp_Rhf} root
+%_fixperms       %{__chmod} -Rf a+rX,u+w,g-w,o-w
+
+#---------------------------------------------------------------------
+#        Expanded at start of %build
+#
+%__spec_build_pre %{___build_pre}\
+%{?buildroot:  %__rm -rf "$RPM_BUILD_ROOT"\
+  %__mkdir_p `dirname "$RPM_BUILD_ROOT"`\
+  %__mkdir "$RPM_BUILD_ROOT"\
+}
